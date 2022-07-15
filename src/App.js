@@ -11,6 +11,8 @@ function App() {
   const [currInput, setCurrInput] = useState("")
   const [win, setWin] = useState(false)
   const [finalTime, setFinalTime] = useState(0)
+  const [subText, setSubText] = useState("Click Start")
+
 
 
   // useEffect(() => {
@@ -23,6 +25,7 @@ function App() {
       randomAlphabets.push(allAlphabets[Math.floor(Math.random()*allAlphabets.length)]);
       if (i===0) {
         setCurrAlphabet(randomAlphabets[0])
+        setSubText("Enter Alphabet Shown")
       }
     }
 
@@ -35,8 +38,9 @@ function App() {
     
     let interval= setInterval(() => {
       setTimer((prevTimer) => {
+        return prevTimer+1
+
       
-      return prevTimer+1
     })
     }
     , 1000)
@@ -49,10 +53,12 @@ function App() {
     {
       setIndex(index+1)
       setCurrAlphabet(alphabets[index+1])
+      setSubText("Correct!")
       console.log(index)
       if (index===19)
       {
         setWin(true)
+        setSubText("You Won!")
         setFinalTime(timer)
       }
     }
@@ -62,7 +68,9 @@ function App() {
       
         return prevTimer+0.5
       })
+      setSubText("Try Again!")
     }
+    
   }
 
 
@@ -71,7 +79,28 @@ function App() {
     <div className="App">
       <div className="section">
         <div className="is-size-1 has-text-centered has-text-primary">
-          <h2>{timer}</h2>
+          <h2>{win?
+          (
+            
+            <>
+              {finalTime}
+              <br/>
+              {subText}
+              </>
+
+            ):
+          
+            (
+              <>
+              {timer}
+              <br/>
+              {subText}
+              </>
+              
+              
+              
+          
+          )}</h2>
         </div>
       </div>
       <div className="control is-expanded section">
