@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
-
+import Right from "./assets/right.wav";
+import Wrong  from "./assets/wrong.wav";
+import Start from "./assets/start.wav";
+import Highscore  from "./assets/highscore.wav";
 var allAlphabets = [
 	"A",
 	"B",
@@ -43,11 +46,18 @@ function App() {
 	const [interval, setInter] = useState(null);
 	const [highScore, setHighScore] = useState(false);
 
+	
+	let right = new Audio(Right)
+	let wrong = new Audio(Wrong)
+	let startSound = new Audio(Start)
+	let highscoreSound = new Audio(Highscore)
 	const storeHighScore = (time) => {
 		const score = localStorage.getItem("highscore");
 		if (score === null || score > time) {
 			setHighScore(true);
+			
 			setTimeout(() => {
+				highscoreSound.play()
 				setHighScore(false);
 			}, 10000);
 			localStorage.setItem("highscore", time);
@@ -56,6 +66,7 @@ function App() {
 
 	const tempfun = (e) => {
 		if (e.key === "Enter" && index === -1) {
+			
 			setIndex(0);
 			start();
 		} else if (index > -1) {
@@ -82,8 +93,10 @@ function App() {
 		if (currkey != null) {
 			if (currkey?.toUpperCase() === currAlphabet) {
 				setIndex(index + 1);
+				right.play()
 				// setSubText("Correct!");
 			} else {
+				wrong.play()
 				setTimer((prevTimer) => {
 					return prevTimer + 0.5;
 				});
@@ -113,6 +126,7 @@ function App() {
 	}
 
 	function start() {
+		startSound.play();
 		const randomString = generateAlphabets();
 		console.log(randomString.toString());
 		setAlphabets(randomString);
