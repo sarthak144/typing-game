@@ -55,9 +55,9 @@ function App() {
 		const score = localStorage.getItem("highscore");
 		if (score === null || score > time) {
 			setHighScore(true);
-			
+			highscoreSound.play()
 			setTimeout(() => {
-				highscoreSound.play()
+				
 				setHighScore(false);
 			}, 10000);
 			localStorage.setItem("highscore", time);
