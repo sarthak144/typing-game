@@ -143,7 +143,7 @@ function App() {
 
 	return (
 		<div className="App font-poppins bg-[#0e184f] text-center flex justify-center">
-			<div className=" h-screen text-white p-40 text-center w-2/3">
+			<div className=" h-screen text-white md:p-40 p-10 text-center md:w-2/3">
 				<h1 className="text-2xl font-bold my-10"> Type The Alphabet</h1>
 				<p>Typing Game to see how fast you type. Timer starts when you do ;)</p>
 				<div className="bg-white p-10 rounded-2xl font-extrabold text-green-700 text-6xl my-10">
