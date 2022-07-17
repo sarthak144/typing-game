@@ -45,6 +45,7 @@ function App() {
 	// const [subText, setSubText] = useState("Click Start");
 	const [interval, setInter] = useState(null);
 	const [highScore, setHighScore] = useState(false);
+	const [endGameText, setEndGameText] = useState("Enter to Restart")
 
 	
 	let right = new Audio(Right)
@@ -57,9 +58,10 @@ function App() {
 			setHighScore(true);
 			highscoreSound.play()
 			setTimeout(() => {
-				
+				setEndGameText("Enter to Restart")
 				setHighScore(false);
-			}, 10000);
+			}, 5000);
+			setEndGameText("New Highscore")
 			localStorage.setItem("highscore", time);
 		}
 	};
@@ -141,16 +143,26 @@ function App() {
 		);
 	}
 
+	function reset()
+	{
+		clearInterval(interval);
+		setTimer(0);
+		setIndex(-1);
+		setWin(false);
+		
+		
+	}
+
 	return (
-		<div className="App font-poppins bg-[#0e184f] text-center flex justify-center">
-			<div className=" h-screen text-white md:p-40 p-10 text-center md:w-2/3">
+		<div className="App  font-poppins bg-[#0e184f] text-center flex justify-center">
+			<div className=" h-screen text-white lg:p-40 p-10 text-center lg:w-2/3">
 				<h1 className="text-2xl font-bold my-10"> Type The Alphabet</h1>
-				<p>Typing Game to see how fast you type. Timer starts when you do ;)</p>
+				<p>Typing Game to see how fast you type. Timer starts when you do :)</p>
 				<div className="bg-white p-10 rounded-2xl font-extrabold text-green-700 text-6xl my-10">
-					{index == -1
+					{index === -1
 						? !win
 							? "Enter to Start"
-							: "Enter to Restart"
+							: endGameText
 						: currAlphabet}
 					{highScore && <Confetti />}
 				</div>
@@ -162,7 +174,12 @@ function App() {
 						My best time: {localStorage.getItem("highscore")}{" "}
 					</p>
 				)}
+				<div className=" w-full mt-20  flex flex-row">
+					<input className=" bg-[#f7f2e8] w-full "/>
+					<button onClick={reset} className="bg-[#dd4f6d] py-2 px-5">Reset</button>
+				</div>
 			</div>
+			
 		</div>
 	);
 }
