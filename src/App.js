@@ -40,7 +40,7 @@ function App() {
 	const [timer, setTimer] = useState(SECONDS);
 	const [index, setIndex] = useState(-1);
 	const [currAlphabet, setCurrAlphabet] = useState();
-	const [currkey, setcurrkey] = useState(null);
+	const [currkey, setcurrkey] = useState("");
 	const [win, setWin] = useState(false);
 	// const [subText, setSubText] = useState("Click Start");
 	const [interval, setInter] = useState(null);
@@ -86,13 +86,14 @@ function App() {
 			setIndex(-1);
 			clearInterval(interval);
 		}
-		document.addEventListener("keyup touchend", tempfun);
 
-		return () => document.removeEventListener("keyup touchend", tempfun);
+		document.addEventListener("keyup", tempfun);
+
+		return () => document.removeEventListener("keyup", tempfun);
 	}, [index]);
 
 	useEffect(() => {
-		if (currkey != null) {
+		if (currkey != "") {
 			if (currkey?.toUpperCase() === currAlphabet) {
 				setIndex(index + 1);
 				right.play()
@@ -149,6 +150,7 @@ function App() {
 		setTimer(0);
 		setIndex(-1);
 		setWin(false);
+		document.getElementById('inp').value=""
 		
 		
 	}
@@ -156,6 +158,7 @@ function App() {
 	return (
 		<div className="App  font-poppins bg-[#0e184f] text-center flex justify-center">
 			<div className=" h-screen text-white lg:p-40 p-10 text-center lg:w-2/3">
+			<div>
 				<h1 className="text-2xl font-bold my-10"> Type The Alphabet</h1>
 				<p>Typing Game to see how fast you type. Timer starts when you do :)</p>
 				<div className="bg-white p-10 rounded-2xl font-extrabold text-green-700 text-6xl my-10">
@@ -174,10 +177,11 @@ function App() {
 						My best time: {localStorage.getItem("highscore")}{" "}
 					</p>
 				)}
-
-				<div className=" w-full mt-20  flex flex-row md:hidden" >
-					<input className=" bg-[#f7f2e8] w-full "/>
+				</div>
+				<div className=" w-full mt-20  flex flex-row md:hidden bg-[#0e184f] " >
+					<input id='inp' className=" bg-[#f7f2e8] w-full text-black" onChange={()=>setcurrkey(document.getElementById('inp').value[document.getElementById('inp').value.length-1])} />
 					<button onClick={reset} className="bg-[#dd4f6d] py-2 px-5">Reset</button>
+					{/* {currkey.value} */}
 				</div>
 			</div>
 			
