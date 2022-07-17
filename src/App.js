@@ -86,9 +86,9 @@ function App() {
 			setIndex(-1);
 			clearInterval(interval);
 		}
-		document.addEventListener("keyup", tempfun);
+		document.addEventListener("keyup touchend", tempfun);
 
-		return () => document.removeEventListener("keyup", tempfun);
+		return () => document.removeEventListener("keyup touchend", tempfun);
 	}, [index]);
 
 	useEffect(() => {
@@ -174,7 +174,8 @@ function App() {
 						My best time: {localStorage.getItem("highscore")}{" "}
 					</p>
 				)}
-				<div className=" w-full mt-20  flex flex-row">
+
+				<div className=" w-full mt-20  flex flex-row md:hidden" >
 					<input className=" bg-[#f7f2e8] w-full "/>
 					<button onClick={reset} className="bg-[#dd4f6d] py-2 px-5">Reset</button>
 				</div>
